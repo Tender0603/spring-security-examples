@@ -1,0 +1,24 @@
+# Secrets
+.env
+**/.env
+
+# Maven build
+target/
+**/target/
+
+# Eclipse / STS
+.metadata/
+.classpath
+.project
+.settings/
+**/.classpath
+**/.project
+**/.settings/
+
+# IntelliJ / Cursor
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
