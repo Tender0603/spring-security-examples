@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head( ${mode == 'create' ? 'Thêm Product' : 'Sửa Product'} )}">
+</head>
+<body>
+<div th:replace="~{layouts/layout :: page(~{::main})}">
+<main>
+<h1 th:text="${mode == 'create' ? 'Thêm Product' : 'Sửa Product'}">
+</h1>
+<form th:object="${productDTO}" th:with="actionUrl=${mode == 'create' ? '/products/create' : '/products/edit/' + productDTO.id}" th:action="${actionUrl}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+<div class="alert error" th:if="${#fields.hasAnyErrors()}"><p th:each="e : ${#fields.allErrors()}" th:text="${e}"></p></div>
+<!-- ID -->
+<input type="hidden" th:field="*{id}">
+<!-- Tên sản phẩm -->
+<div>
+<label for="name"> Tên sản phẩm </label>
+<input id="name" type="text" th:field="*{name}">
+<small class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+</small>
+</div>
+<!-- Mô tả -->
+<div>
+<label for="description"> Mô tả </label>
+<textarea id="description" th:field="*{description}" rows="5">
+</textarea>
+</div>
+<!-- Giá -->
+<div>
+<label for="price"> Giá </label>
+<input id="price" type="number" step="0.01" th:field="*{price}">
+<small class="error-text" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">
+</small>
+</div>
+<!-- Ảnh -->
+<div>
+<label for="image"> Ảnh </label>
+<input id="image" type="file" name="image" accept="image/*">
+<small>Chọn ảnh tối đa 10 MB. Nếu gửi form thất bại, hãy chọn lại file ảnh trước khi thử lại.</small>
+</div>
+<!-- Preview ảnh hiện tại -->
+<div th:if="${productDTO.imageUrl != null}">
+<img th:src="${productDTO.imageUrl}" class="preview" alt="Ảnh sản phẩm hiện tại">
+</div>
+<!-- Button -->
+<div>
+<button type="submit" class="button">Lưu</button>
+<a class="button secondary" th:href="@{/products}"> Hủy </a>
+</div>
+</form>
+</main>
+</div>
+</body>
+</html>
